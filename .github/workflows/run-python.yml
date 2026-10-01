@@ -3,6 +3,9 @@ name: Run Python
 on:
 
   pull_request:
+    branches:
+      - main
+      - development
 
 jobs:
 
