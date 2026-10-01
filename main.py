@@ -1,15 +1,22 @@
-import numpy as np
+import csv
+import statistics
 
-import pandas as pd
+# Calculate statistics such as mean, median, mode on this data
 
-numbers = np.array([10, 20, 30, 40, 50])
+with open("tips.csv", "r", encoding="utf-8") as csvfile:
+    reader = csv.DictReader(csvfile)
+    data = [float(row["total_bill"]) for row in reader]
 
-df = pd.DataFrame({
+results = {
+    "mean": statistics.mean(data),
+    "median": statistics.median(data),
+    "mode": statistics.mode(data),
+}
 
-    "numbers": numbers
+with open("statistics.csv", "w", encoding="utf-8", newline="") as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(["metric", "value"])
+    writer.writerows(results.items())
 
-})
-
-print(df)
-
-print("Mean:", df["numbers"].mean())
+for metric, value in results.items():
+    print(f"{metric.title()}: {value}")
